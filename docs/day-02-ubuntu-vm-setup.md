@@ -91,32 +91,32 @@ VirtualBox snapshots created:
 
 ### VirtualBox VM Details
 
-![VirtualBox VM Details](../screenshots/day-02-ubuntu-vm-setup/01-virtualbox-vm-details.png)
+<img src="../screenshots/day-02-ubuntu-vm-setup/01-virtualbox-vm-details.png" alt="VirtualBox VM Details" width="700">
 
 ### Working Display Settings
 
-![Working Display Settings](../screenshots/day-02-ubuntu-vm-setup/02-display-settings-working.png)
+<img src="../screenshots/day-02-ubuntu-vm-setup/02-display-settings-working.png" alt="Working Display Settings" width="700">
 
 ### Ubuntu Desktop Running
 
-![Ubuntu Desktop Running](../screenshots/day-02-ubuntu-vm-setup/03-ubuntu-desktop-running.png)
+<img src="../screenshots/day-02-ubuntu-vm-setup/03-ubuntu-desktop-running.png" alt="Ubuntu Desktop Running" width="700">
 
 ### Ubuntu Version
 
-![Ubuntu Version](../screenshots/day-02-ubuntu-vm-setup/04-ubuntu-version.png)
+<img src="../screenshots/day-02-ubuntu-vm-setup/04-ubuntu-version.png" alt="Ubuntu Version" width="700">
 
 ### Basic Tools Installed
 
-![Basic Tools Installed](../screenshots/day-02-ubuntu-vm-setup/05-basic-tools-installed.png)
+<img src="../screenshots/day-02-ubuntu-vm-setup/05-basic-tools-installed.png" alt="Basic Tools Installed" width="700">
 
 ### Network Interface
 
-![Network Interface](../screenshots/day-02-ubuntu-vm-setup/06-network-interface.png)
+<img src="../screenshots/day-02-ubuntu-vm-setup/06-network-interface.png" alt="Network Interface" width="700">
 
 ### SSH Socket Active
 
-![SSH Socket Active](../screenshots/day-02-ubuntu-vm-setup/07-ssh-socket-active.png)
+<img src="../screenshots/day-02-ubuntu-vm-setup/07-ssh-socket-active.png" alt="SSH Socket Active" width="700">
 
 ### VirtualBox Snapshots
 
-![VirtualBox Snapshots](../screenshots/day-02-ubuntu-vm-setup/08-virtualbox-snapshots.png)
+<img src="../screenshots/day-02-ubuntu-vm-setup/08-virtualbox-snapshots.png" alt="VirtualBox Snapshots" width="700">
