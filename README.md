@@ -34,3 +34,20 @@ Architecture diagram will be added after the lab environment is finalized.
 
 ## Status
 Project setup in progress.
+
+## Lab Progress
+
+### Day 02 – Ubuntu VM Setup
+
+Completed Ubuntu VM setup using Oracle VirtualBox.
+
+Configured and verified:
+
+- Ubuntu 24.04.4 LTS VM
+- 4096 MB RAM and 2 processors
+- NAT networking
+- Basic cybersecurity tools: nmap, git, curl, net-tools
+- OpenSSH server socket listening on port 22
+- VirtualBox snapshots for recovery
+
+Documentation: [Day 02 – Ubuntu VM Setup](docs/day-02-ubuntu-vm-setup.md)

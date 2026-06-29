@@ -1,0 +1,14 @@
+# Virtual machine files
+*.iso
+*.vdi
+*.vbox
+*.vbox-prev
+*.ova
+*.ovf
+
+# VirtualBox folders
+VirtualBox VMs/
+
+# OS files
+.DS_Store
+Thumbs.db
