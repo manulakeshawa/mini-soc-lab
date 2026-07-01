@@ -9,8 +9,9 @@ This lab is being built step by step for cybersecurity internship preparation.
 ## Planned Lab Components
 
 | Component           | Purpose                                                     | Status                    |
-| ------------------- | ----------------------------------------------------------- | ------------------------- |
+|---------------------|-------------------------------------------------------------|---------------------------|
 | Ubuntu Test Machine | Generate test activity and practice Linux/security commands | Completed                 |
+| Ubuntu Scanner      | Run safe Nmap scans inside the private lab network          | Completed                 |
 | Wazuh Server        | SIEM/XDR dashboard and alert analysis                       | Completed                 |
 | Windows Endpoint    | Collect Windows event logs                                  | Planned                   |
 | Suricata IDS        | Network intrusion detection                                 | Planned                   |
@@ -81,17 +82,35 @@ Detailed documentation:
 
 * [Day 04 – Ubuntu Agent Enrollment](docs/day-04-ubuntu-agent-enrollment.md)
 
+### Ubuntu Scanner
+
+A separate Ubuntu Scanner VM was created to run safe Nmap scans inside the private lab network.
+
+Completed work:
+
+* Ubuntu Scanner VM created in Oracle VirtualBox
+* Basic tools installed, including `nmap`
+* Host-only adapter configured
+* Static IP address assigned: `192.168.56.40`
+* Connectivity verified to Wazuh Server at `192.168.56.10`
+* Connectivity verified to Ubuntu Test Machine at `192.168.56.20`
+
+Purpose:
+
+The Ubuntu Scanner is used to generate safe scan activity against lab endpoints only.
+
 ## Planned Network Design
 
 The lab uses NAT networking for internet access and a host-only network for internal lab communication.
 
 Planned IP address structure:
 
-| Machine             | Planned IP Address | Role                    |
-| ------------------- | ------------------ | ----------------------- |
-| Wazuh Server        | 192.168.56.10      | SIEM/XDR server         |
-| Ubuntu Test Machine | 192.168.56.20      | Test/attacker machine   |
-| Windows Endpoint    | 192.168.56.30      | Endpoint/victim machine |
+| Machine             | Planned IP Address   | Role                             |
+|---------------------|----------------------|----------------------------------|
+| Wazuh Server        | 192.168.56.10        | SIEM/XDR server                  |
+| Ubuntu Test Machine | 192.168.56.20        | Monitored endpoint / scan target |
+| Ubuntu Scanner      | 192.168.56.40        | Scanner / Nmap machine           |
+| Windows Endpoint    | 192.168.56.30        | Endpoint/victim machine          |
 
 The Wazuh Server currently uses the host-only IP address:
 
@@ -101,15 +120,17 @@ The Wazuh Server currently uses the host-only IP address:
 
 The Ubuntu Test Machine is connected to the host-only lab network with the IP address 192.168.56.20 and has been enrolled as an active Wazuh agent.
 
-## Planned Detection Scenarios
+## Detection Scenarios
 
-The lab will later be used to test and document these detection scenarios:
+The lab is being used to test and document these detection scenarios:
 
-1. Nmap port scan detection
-2. Failed SSH login / brute-force attempt detection
-3. Suspicious command execution
-4. Suricata network alert
-5. Safe malware test detection using EICAR
+| Scenario                                         | Status    |
+|--------------------------------------------------|-----------|
+| Nmap port scan detection                         | Completed |
+| Failed SSH login / brute-force attempt detection | Planned   |
+| Suspicious command execution                     | Planned   |
+| Suricata network alert                           | Planned   |
+| Safe malware test detection using EICAR          | Planned   |
 
 ## Setup Status
 
@@ -127,21 +148,26 @@ The lab will later be used to test and document these detection scenarios:
 * [x] Ubuntu test machine connected to host-only network
 * [x] Wazuh agent installed on Ubuntu test machine
 * [x] Ubuntu test machine active in Wazuh dashboard
+* [x] Ubuntu scanner VM created
+* [x] Ubuntu scanner connected to host-only network
+* [x] Nmap scan performed inside lab network
+* [x] UFW firewall logs captured as scan evidence
+* [x] First incident report written
+* [ ] Failed SSH login detection completed
 * [ ] Windows endpoint created
 * [ ] Suricata installed
-* [ ] First alert generated
-* [ ] First incident report written
 
 ## Setup Progress Logs
 
 * [Day 02 – Ubuntu VM Setup](docs/day-02-ubuntu-vm-setup.md)
 * [Day 03 – Wazuh Server Setup](docs/day-03-wazuh-server-setup.md)
 * [Day 04 – Ubuntu Agent Enrollment](docs/day-04-ubuntu-agent-enrollment.md)
+* [Nmap Scan Incident Report](incident-reports/nmap-scan-incident.md)
 
 ## Next Steps
 
-1. Generate safe Nmap scan activity inside the lab network.
-2. Check Wazuh dashboard for scan-related logs or alerts.
-3. Capture evidence screenshots.
-4. Create the first incident report.
-5. Continue with failed SSH login detection after the Nmap scenario.
+1. Allow SSH access from Ubuntu Scanner to Ubuntu Test Machine if needed for testing.
+2. Generate manual failed SSH login attempts from Ubuntu Scanner.
+3. Check authentication logs on the Ubuntu Test Machine.
+4. Check Wazuh dashboard for failed SSH login events.
+5. Write the failed SSH login incident report.

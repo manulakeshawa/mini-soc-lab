@@ -18,9 +18,10 @@ The lab focuses on collecting logs from Linux/Windows endpoints, detecting suspi
 ## Tools Used / Planned
 
 | Tool                       | Purpose                                                 | Status            |
-| -------------------------- | ------------------------------------------------------- | ----------------- |
+|----------------------------|---------------------------------------------------------|-------------------|
 | Oracle VirtualBox          | Virtual lab environment                                 | In use            |
 | Ubuntu Desktop 24.04.4 LTS | Ubuntu test machine                                     | Completed         |
+| Ubuntu Scanner VM          | Dedicated scanner machine for safe Nmap testing         | Completed         |
 | Ubuntu Server 24.04.4 LTS  | Wazuh server base OS                                    | Completed         |
 | Wazuh SIEM/XDR             | Log collection, alert analysis, and security monitoring | Installed         |
 | Nmap                       | Safe scan activity and network testing                  | Installed         |
@@ -31,21 +32,22 @@ The lab focuses on collecting logs from Linux/Windows endpoints, detecting suspi
 
 ## Lab Architecture
 
-| Machine             | IP Address              | Purpose                             | Status    |
-| ------------------- | ----------------------- | ----------------------------------- | --------- |
-| Wazuh Server        | 192.168.56.10           | SIEM/XDR dashboard and log analysis | Installed |
-| Ubuntu Test Machine | 192.168.56.20 | Monitored Ubuntu endpoint and test machine | Agent enrolled   |
-| Windows Endpoint    | 192.168.56.30 planned   | Windows event log collection        | Planned   |
+| Machine             | IP Address            | Purpose                                    | Status         |
+|---------------------|-----------------------|--------------------------------------------|----------------|
+| Wazuh Server        | 192.168.56.10         | SIEM/XDR dashboard and log analysis        | Installed      |
+| Ubuntu Test Machine | 192.168.56.20         | Monitored Ubuntu endpoint and scan target  | Agent enrolled |
+| Ubuntu Scanner      | 192.168.56.40         | Dedicated scanner machine for Nmap testing | Created        |
+| Windows Endpoint    | 192.168.56.30 planned | Windows event log collection               | Planned        |
 
 Architecture diagram will be updated as the lab environment is completed.
 
 ## Planned Detection Scenarios
 
 | Scenario                                 | Status    |
-| ---------------------------------------- | --------- |
+|------------------------------------------|-----------|
 | Wazuh server setup                       | Completed |
 | Ubuntu endpoint agent enrollment         | Completed |
-| Nmap port scan detection                 | Planned   |
+| Nmap port scan detection                 | Completed |
 | Failed SSH login / brute-force detection | Planned   |
 | Suspicious command execution             | Planned   |
 | Suricata network alert analysis          | Planned   |
@@ -113,9 +115,30 @@ Configured and verified:
 
 Documentation: [Day 04 – Ubuntu Agent Enrollment](docs/day-04-ubuntu-agent-enrollment.md)
 
+### Day 05 – Nmap Scan Detection
+
+Completed a safe Nmap scan detection scenario inside the private lab network.
+
+Configured and verified:
+
+- Ubuntu Scanner VM created as a dedicated scanner machine
+- Ubuntu Scanner assigned host-only IP address: `192.168.56.40`
+- Ubuntu Scanner successfully reached:
+  - Wazuh Server: `192.168.56.10`
+  - Ubuntu Test Machine: `192.168.56.20`
+- Nmap service detection scan performed against Ubuntu Test Machine
+- UFW firewall enabled on Ubuntu Test Machine
+- UFW logging enabled on Ubuntu Test Machine
+- SYN scan performed from Ubuntu Scanner to Ubuntu Test Machine
+- UFW logs confirmed blocked scan packets from `192.168.56.40`
+- Wazuh dashboard was reviewed for scan-related events
+- Limitation documented: Wazuh did not clearly classify the activity as an Nmap scan during this test
+
+Incident report: [Nmap Scan Incident Report](incident-reports/nmap-scan-incident.md)
+
 ## Current Status
 
-The lab foundation is in progress.
+The lab foundation and first detection scenario are in progress.
 
 Completed:
 
@@ -126,15 +149,19 @@ Completed:
 * Wazuh dashboard accessed successfully
 * Ubuntu test machine connected to host-only lab network
 * Ubuntu test machine enrolled as a Wazuh agent
+* Ubuntu scanner VM created
+* Safe Nmap scan performed inside the lab network
+* UFW firewall logs collected as scan evidence
+* First incident report written
 * Setup documentation and screenshots added
 
 Next steps:
 
-1. Generate safe Nmap scan activity inside the lab network.
-2. Check Wazuh alerts/logs for scan-related activity.
-3. Capture evidence screenshots.
-4. Document the first detection scenario.
-5. Write the first incident report.
+1. Generate manual failed SSH login attempts inside the lab network.
+2. Check `/var/log/auth.log` on the Ubuntu Test Machine.
+3. Check Wazuh dashboard for failed SSH login events.
+4. Capture evidence screenshots.
+5. Write the failed SSH login incident report.
 
 ## Repository Structure
 
@@ -145,15 +172,17 @@ mini-soc-lab/
 ├── architecture-diagram.png
 ├── docs/
 │   ├── day-02-ubuntu-vm-setup.md
-│   └── day-03-wazuh-server-setup.md
-|   └── day-04-ubuntu-agent-enrollment.md
+│   ├── day-03-wazuh-server-setup.md
+│   └── day-04-ubuntu-agent-enrollment.md
 ├── screenshots/
 │   ├── day-02-ubuntu-vm-setup/
-│   └── day-03-wazuh-server-setup/
-|   └── day-04-ubuntu-agent-enrollment/
+│   ├── day-03-wazuh-server-setup/
+│   ├── day-04-ubuntu-agent-enrollment/
+│   └── day-05-nmap-scan-detection/
 ├── detection-rules/
 ├── sample-alerts/
 ├── incident-reports/
+│   └── nmap-scan-incident.md
 └── lessons-learned.md
 ```
 
