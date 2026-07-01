@@ -34,7 +34,7 @@ The lab focuses on collecting logs from Linux/Windows endpoints, detecting suspi
 | Machine             | IP Address              | Purpose                             | Status    |
 | ------------------- | ----------------------- | ----------------------------------- | --------- |
 | Wazuh Server        | 192.168.56.10           | SIEM/XDR dashboard and log analysis | Installed |
-| Ubuntu Test Machine | To be assigned/verified | Test machine and future Wazuh agent | Created   |
+| Ubuntu Test Machine | 192.168.56.20 | Monitored Ubuntu endpoint and test machine | Agent enrolled   |
 | Windows Endpoint    | 192.168.56.30 planned   | Windows event log collection        | Planned   |
 
 Architecture diagram will be updated as the lab environment is completed.
@@ -44,7 +44,7 @@ Architecture diagram will be updated as the lab environment is completed.
 | Scenario                                 | Status    |
 | ---------------------------------------- | --------- |
 | Wazuh server setup                       | Completed |
-| Ubuntu endpoint agent enrollment         | Planned   |
+| Ubuntu endpoint agent enrollment         | Completed |
 | Nmap port scan detection                 | Planned   |
 | Failed SSH login / brute-force detection | Planned   |
 | Suspicious command execution             | Planned   |
@@ -92,6 +92,27 @@ Configured and verified:
 
 Documentation: [Day 03 – Wazuh Server Setup](docs/day-03-wazuh-server-setup.md)
 
+### Day 04 – Ubuntu Agent Enrollment
+
+Completed Ubuntu Test Machine enrollment as a Wazuh agent.
+
+Configured and verified:
+
+- Host-only network configured on Ubuntu Test Machine
+- Ubuntu Test Machine assigned static IP address: `192.168.56.20`
+- Wazuh Server reachable at `192.168.56.10`
+- Wazuh agent installed on Ubuntu Test Machine
+- Wazuh agent service verified as `active (running)`
+- Ubuntu endpoint appeared in Wazuh dashboard as an active agent
+- Agent details verified:
+  - Agent name: `ubuntu-test-machine`
+  - Agent ID: `001`
+  - IP address: `192.168.56.20`
+  - Operating system: Ubuntu 24.04.4 LTS
+  - Wazuh agent version: 4.14.5
+
+Documentation: [Day 04 – Ubuntu Agent Enrollment](docs/day-04-ubuntu-agent-enrollment.md)
+
 ## Current Status
 
 The lab foundation is in progress.
@@ -103,15 +124,17 @@ Completed:
 * Wazuh server VM created
 * Wazuh server installed
 * Wazuh dashboard accessed successfully
+* Ubuntu test machine connected to host-only lab network
+* Ubuntu test machine enrolled as a Wazuh agent
 * Setup documentation and screenshots added
 
 Next steps:
 
-1. Connect the Ubuntu Test Machine to the host-only lab network.
-2. Install the Wazuh agent on the Ubuntu Test Machine.
-3. Confirm the Ubuntu endpoint appears in the Wazuh dashboard.
-4. Generate safe test activity.
-5. Document the first alert and incident report.
+1. Generate safe Nmap scan activity inside the lab network.
+2. Check Wazuh alerts/logs for scan-related activity.
+3. Capture evidence screenshots.
+4. Document the first detection scenario.
+5. Write the first incident report.
 
 ## Repository Structure
 
@@ -123,9 +146,11 @@ mini-soc-lab/
 ├── docs/
 │   ├── day-02-ubuntu-vm-setup.md
 │   └── day-03-wazuh-server-setup.md
+|   └── day-04-ubuntu-agent-enrollment.md
 ├── screenshots/
 │   ├── day-02-ubuntu-vm-setup/
 │   └── day-03-wazuh-server-setup/
+|   └── day-04-ubuntu-agent-enrollment/
 ├── detection-rules/
 ├── sample-alerts/
 ├── incident-reports/

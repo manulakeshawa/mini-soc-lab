@@ -64,6 +64,23 @@ Detailed documentation:
 
 * [Day 03 – Wazuh Server Setup](docs/day-03-wazuh-server-setup.md)
 
+### Ubuntu Agent Enrollment
+
+The Ubuntu Test Machine has been connected to the host-only lab network and enrolled as a Wazuh agent.
+
+Completed work:
+
+* Host-only network configured on Ubuntu Test Machine
+* Static IP address assigned: `192.168.56.20`
+* Connectivity to Wazuh Server verified
+* Wazuh agent installed
+* Wazuh agent service verified as running
+* Ubuntu endpoint appeared as active in the Wazuh dashboard
+
+Detailed documentation:
+
+* [Day 04 – Ubuntu Agent Enrollment](docs/day-04-ubuntu-agent-enrollment.md)
+
 ## Planned Network Design
 
 The lab uses NAT networking for internet access and a host-only network for internal lab communication.
@@ -82,7 +99,7 @@ The Wazuh Server currently uses the host-only IP address:
 192.168.56.10
 ```
 
-The Ubuntu Test Machine still needs to be connected to the host-only lab network before it can be enrolled as a Wazuh agent.
+The Ubuntu Test Machine is connected to the host-only lab network with the IP address 192.168.56.20 and has been enrolled as an active Wazuh agent.
 
 ## Planned Detection Scenarios
 
@@ -107,8 +124,9 @@ The lab will later be used to test and document these detection scenarios:
 * [x] Wazuh server installed
 * [x] Wazuh services verified
 * [x] Wazuh dashboard accessed successfully
-* [ ] Ubuntu test machine connected to host-only network
-* [ ] Wazuh agent installed on Ubuntu test machine
+* [x] Ubuntu test machine connected to host-only network
+* [x] Wazuh agent installed on Ubuntu test machine
+* [x] Ubuntu test machine active in Wazuh dashboard
 * [ ] Windows endpoint created
 * [ ] Suricata installed
 * [ ] First alert generated
@@ -118,11 +136,12 @@ The lab will later be used to test and document these detection scenarios:
 
 * [Day 02 – Ubuntu VM Setup](docs/day-02-ubuntu-vm-setup.md)
 * [Day 03 – Wazuh Server Setup](docs/day-03-wazuh-server-setup.md)
+* [Day 04 – Ubuntu Agent Enrollment](docs/day-04-ubuntu-agent-enrollment.md)
 
 ## Next Steps
 
-1. Connect the Ubuntu Test Machine to the host-only lab network.
-2. Assign or verify the Ubuntu Test Machine lab IP address.
-3. Install the Wazuh agent on the Ubuntu Test Machine.
-4. Confirm that the Ubuntu Test Machine appears as an active agent in the Wazuh dashboard.
-5. Generate the first safe test activity and document the first alert.
+1. Generate safe Nmap scan activity inside the lab network.
+2. Check Wazuh dashboard for scan-related logs or alerts.
+3. Capture evidence screenshots.
+4. Create the first incident report.
+5. Continue with failed SSH login detection after the Nmap scenario.
