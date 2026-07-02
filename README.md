@@ -48,7 +48,7 @@ Architecture diagram will be updated as the lab environment is completed.
 | Wazuh server setup                       | Completed |
 | Ubuntu endpoint agent enrollment         | Completed |
 | Nmap port scan detection                 | Completed |
-| Failed SSH login / brute-force detection | Planned   |
+| Failed SSH login / brute-force detection | Completed |
 | Suspicious command execution             | Planned   |
 | Suricata network alert analysis          | Planned   |
 | Safe malware test detection using EICAR  | Planned   |
@@ -136,9 +136,30 @@ Configured and verified:
 
 Incident report: [Nmap Scan Incident Report](incident-reports/nmap-scan-incident.md)
 
+### Day 06 – Failed SSH Login Detection
+
+Completed a failed SSH login detection scenario inside the private lab network.
+
+Configured and verified:
+
+- SSH access allowed from Ubuntu Scanner to Ubuntu Test Machine
+- SSH service verified as running on Ubuntu Test Machine
+- Manual failed SSH login attempts generated from Ubuntu Scanner
+- Invalid username used: `wronguser`
+- Source IP address: `192.168.56.40`
+- Target IP address: `192.168.56.20`
+- Ubuntu authentication logs confirmed failed SSH attempts
+- Wazuh dashboard displayed SSH-related failed login events
+- Wazuh detected:
+  - `sshd: Attempt to login using a non-existent user`
+  - `syslog: User missed the password more than one time`
+- Wazuh events confirmed the invalid username and source IP address
+
+Incident report: [Failed SSH Login Incident Report](incident-reports/failed-ssh-login-incident.md)
+
 ## Current Status
 
-The lab foundation and first detection scenario are in progress.
+The lab foundation and first two detection scenarios are completed.
 
 Completed:
 
@@ -152,16 +173,24 @@ Completed:
 * Ubuntu scanner VM created
 * Safe Nmap scan performed inside the lab network
 * UFW firewall logs collected as scan evidence
-* First incident report written
+* Failed SSH login attempts generated manually
+* Ubuntu authentication logs reviewed
+* Wazuh failed SSH login events reviewed
+* Two incident reports written
 * Setup documentation and screenshots added
 
 Next steps:
 
-1. Generate manual failed SSH login attempts inside the lab network.
-2. Check `/var/log/auth.log` on the Ubuntu Test Machine.
-3. Check Wazuh dashboard for failed SSH login events.
+1. Generate harmless suspicious command activity on the Ubuntu Test Machine.
+2. Review command-related logs and Wazuh events.
+3. Test the EICAR safe malware test file carefully.
 4. Capture evidence screenshots.
-5. Write the failed SSH login incident report.
+5. Write suspicious command and EICAR documentation.
+
+## Incident Reports
+
+- [Nmap Scan Incident Report](incident-reports/nmap-scan-incident.md)
+- [Failed SSH Login Incident Report](incident-reports/failed-ssh-login-incident.md)
 
 ## Repository Structure
 
@@ -178,11 +207,13 @@ mini-soc-lab/
 │   ├── day-02-ubuntu-vm-setup/
 │   ├── day-03-wazuh-server-setup/
 │   ├── day-04-ubuntu-agent-enrollment/
-│   └── day-05-nmap-scan-detection/
+│   ├── day-05-nmap-scan-detection/
+|   └── day-06-failed-ssh-login-detection/
 ├── detection-rules/
 ├── sample-alerts/
 ├── incident-reports/
-│   └── nmap-scan-incident.md
+│   ├── nmap-scan-incident.md
+|   └── failed-ssh-login-incident.md
 └── lessons-learned.md
 ```
 

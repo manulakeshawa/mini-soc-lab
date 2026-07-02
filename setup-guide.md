@@ -99,6 +99,25 @@ Purpose:
 
 The Ubuntu Scanner is used to generate safe scan activity against lab endpoints only.
 
+### Failed SSH Login Detection
+
+Manual failed SSH login attempts were generated from Ubuntu Scanner against the Ubuntu Test Machine.
+
+Completed work:
+
+* SSH service verified as running on Ubuntu Test Machine
+* UFW rule added to allow SSH from Ubuntu Scanner
+* Failed SSH attempts generated manually using the username `wronguser`
+* Authentication logs reviewed on Ubuntu Test Machine
+* Wazuh dashboard reviewed for failed SSH login events
+* Wazuh showed SSH-related alerts for non-existent user login attempts
+* Source IP confirmed as `192.168.56.40`
+* Failed SSH login incident report written
+
+Detailed documentation:
+
+* [Failed SSH Login Incident Report](incident-reports/failed-ssh-login-incident.md)
+
 ## Planned Network Design
 
 The lab uses NAT networking for internet access and a host-only network for internal lab communication.
@@ -127,7 +146,7 @@ The lab is being used to test and document these detection scenarios:
 | Scenario                                         | Status    |
 |--------------------------------------------------|-----------|
 | Nmap port scan detection                         | Completed |
-| Failed SSH login / brute-force attempt detection | Planned   |
+| Failed SSH login / brute-force attempt detection | Completed |
 | Suspicious command execution                     | Planned   |
 | Suricata network alert                           | Planned   |
 | Safe malware test detection using EICAR          | Planned   |
@@ -152,8 +171,10 @@ The lab is being used to test and document these detection scenarios:
 * [x] Ubuntu scanner connected to host-only network
 * [x] Nmap scan performed inside lab network
 * [x] UFW firewall logs captured as scan evidence
-* [x] First incident report written
-* [ ] Failed SSH login detection completed
+* [x] Nmap scan incident report written
+* [x] Failed SSH login detection completed
+* [x] Failed SSH login incident report written
+* [ ] Suspicious command detection completed
 * [ ] Windows endpoint created
 * [ ] Suricata installed
 
@@ -163,11 +184,12 @@ The lab is being used to test and document these detection scenarios:
 * [Day 03 – Wazuh Server Setup](docs/day-03-wazuh-server-setup.md)
 * [Day 04 – Ubuntu Agent Enrollment](docs/day-04-ubuntu-agent-enrollment.md)
 * [Nmap Scan Incident Report](incident-reports/nmap-scan-incident.md)
+* [Failed SSH Login Incident Report](incident-reports/failed-ssh-login-incident.md)
 
 ## Next Steps
 
-1. Allow SSH access from Ubuntu Scanner to Ubuntu Test Machine if needed for testing.
-2. Generate manual failed SSH login attempts from Ubuntu Scanner.
-3. Check authentication logs on the Ubuntu Test Machine.
-4. Check Wazuh dashboard for failed SSH login events.
-5. Write the failed SSH login incident report.
+1. Generate harmless suspicious command activity on the Ubuntu Test Machine.
+2. Review command-related logs and Wazuh events.
+3. Document suspicious command activity.
+4. Carefully perform the EICAR safe malware test.
+5. Add screenshots and notes for Day 7.
