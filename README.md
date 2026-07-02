@@ -43,15 +43,15 @@ Architecture diagram will be updated as the lab environment is completed.
 
 ## Planned Detection Scenarios
 
-| Scenario                                 | Status    |
-|------------------------------------------|-----------|
-| Wazuh server setup                       | Completed |
-| Ubuntu endpoint agent enrollment         | Completed |
-| Nmap port scan detection                 | Completed |
-| Failed SSH login / brute-force detection | Completed |
-| Suspicious command execution             | Planned   |
-| Suricata network alert analysis          | Planned   |
-| Safe malware test detection using EICAR  | Planned   |
+| Scenario                                  | Status                 |
+|-------------------------------------------|------------------------|
+| Wazuh server setup                        | Completed              |
+| Ubuntu endpoint agent enrollment          | Completed              |
+| Nmap port scan detection                  | Completed              |
+| Failed SSH login / brute-force detection  | Completed              |
+| Suspicious command execution              | Completed              |
+| Safe malware test detection using EICAR   | Completed / Documented |
+| Suricata network alert analysis           | Planned                |
 
 ## Lab Progress
 
@@ -157,6 +157,33 @@ Configured and verified:
 
 Incident report: [Failed SSH Login Incident Report](incident-reports/failed-ssh-login-incident.md)
 
+### Day 07 – Suspicious Command Activity and EICAR Test
+
+Completed suspicious command activity testing and a safe EICAR anti-malware test inside the private lab environment.
+
+Configured and verified:
+
+- Harmless enumeration commands executed on Ubuntu Test Machine
+- Sensitive file access attempt performed safely using `/etc/shadow`
+- `/etc/shadow` contents were not uploaded to GitHub
+- Wazuh recorded sudo command activity
+- Wazuh event details showed:
+  - Source user: `manula`
+  - Destination user: `root`
+  - Command: `/usr/bin/head -n 5 /etc/shadow`
+  - Agent: `ubuntu-test-machine`
+- ClamAV installed on Ubuntu Test Machine
+- EICAR test file created locally for safe anti-malware testing
+- ClamAV detected the EICAR test file as `Eicar-Signature FOUND`
+- Wazuh was reviewed for EICAR-related events
+- Limitation documented: Wazuh did not clearly show an EICAR malware detection event during this test
+- EICAR test file removed after testing
+- Actual EICAR test file was not uploaded to GitHub
+
+Incident report: [Suspicious Command Incident Report](incident-reports/suspicious-command-incident.md)
+
+Notes: [EICAR Test Notes](sample-alerts/eicar-test-notes.md)
+
 ## Current Status
 
 The lab foundation and first two detection scenarios are completed.
@@ -176,21 +203,30 @@ Completed:
 * Failed SSH login attempts generated manually
 * Ubuntu authentication logs reviewed
 * Wazuh failed SSH login events reviewed
-* Two incident reports written
+* Suspicious command activity generated and reviewed
+* Wazuh sudo command events reviewed
+* EICAR safe malware test performed with ClamAV
+* Three incident reports written
+* EICAR test notes documented
 * Setup documentation and screenshots added
 
 Next steps:
 
-1. Generate harmless suspicious command activity on the Ubuntu Test Machine.
-2. Review command-related logs and Wazuh events.
-3. Test the EICAR safe malware test file carefully.
-4. Capture evidence screenshots.
-5. Write suspicious command and EICAR documentation.
+1. Add Suricata IDS for network-based detection.
+2. Generate safe network traffic inside the lab.
+3. Review Suricata logs.
+4. Capture Wireshark evidence.
+5. Write the network scan / Suricata incident report.
 
 ## Incident Reports
 
 - [Nmap Scan Incident Report](incident-reports/nmap-scan-incident.md)
 - [Failed SSH Login Incident Report](incident-reports/failed-ssh-login-incident.md)
+- [Suspicious Command Incident Report](incident-reports/suspicious-command-incident.md)
+
+## Sample Alert Notes
+
+- [EICAR Test Notes](sample-alerts/eicar-test-notes.md)
 
 ## Repository Structure
 
@@ -208,12 +244,15 @@ mini-soc-lab/
 │   ├── day-03-wazuh-server-setup/
 │   ├── day-04-ubuntu-agent-enrollment/
 │   ├── day-05-nmap-scan-detection/
-|   └── day-06-failed-ssh-login-detection/
+│   ├── day-06-failed-ssh-login-detection/
+│   └── day-07-suspicious-command-eicar/
 ├── detection-rules/
 ├── sample-alerts/
+│   └── eicar-test-notes.md
 ├── incident-reports/
 │   ├── nmap-scan-incident.md
-|   └── failed-ssh-login-incident.md
+│   ├── failed-ssh-login-incident.md
+│   └── suspicious-command-incident.md
 └── lessons-learned.md
 ```
 
